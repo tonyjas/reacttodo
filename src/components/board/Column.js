@@ -2,7 +2,12 @@ import Task from './Task';
 
 function Column(props) {
   return (
-    <div className="column">
+    <div
+      className="column"
+      onDragOver={() => {
+        console.log('over');
+      }}
+    >
       <div className="column-header">
         <h3>{props.title}</h3>
       </div>
