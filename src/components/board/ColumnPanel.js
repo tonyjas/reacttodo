@@ -1,14 +1,32 @@
 import Column from './Column';
+import { DndContext } from '@dnd-kit/core';
 
-function ColumnPanel() {
+function ColumnPanel(props) {
+  function handleDragEnd(event) {
+    console.log('Hello!');
+    console.log(event);
+    console.log(event.active.id);
+    console.log(event.over?.id);
+
+    props.onMoveTask(event.active.id, event.over?.id);
+  }
+
   return (
     <>
-      <div className="column-panel">
-        <Column title="backlog" />
-        <Column title="today" />
-        <Column title="in progress" />
-        <Column title="done" />
-      </div>
+      <DndContext onDragEnd={handleDragEnd}>
+        <div className="column-panel">
+          {props.columns.map((column) => {
+            return (
+              <Column
+                key={column.id}
+                id={column.id}
+                title={column.title}
+                tasks={column.tasks}
+              />
+            );
+          })}
+        </div>
+      </DndContext>
     </>
   );
 }
