@@ -27,14 +27,35 @@ const dummyColumns = [
 function Board() {
   const [columns, setColumns] = useState(dummyColumns);
 
-  function updateColumnsHandler(taskId, columnId) {
-    console.log('TODO: updateColumnsHandler');
+  function moveTaskStartHandler(taskId) {
+    console.log('TODO: moveTaskStartHandler');
+  }
+
+  function moveTaskEndHandler(taskId, columnId) {
+    // copy columns
+    let newColumns = [...columns];
+
+    newColumns.forEach((column) => {
+      column.tasks = column.tasks.filter((task) => task.title !== taskId);
+      if (column.id === columnId) {
+        column.tasks.push({ title: taskId });
+      }
+    });
+
+    console.log(newColumns);
+    console.log('TODO: moveTaskEndHandler');
+
+    setColumns(newColumns);
   }
 
   return (
     <div className="board">
       Board
-      <ColumnPanel columns={columns} onMoveTask={updateColumnsHandler} />
+      <ColumnPanel
+        columns={columns}
+        onMoveTaskStart={moveTaskStartHandler}
+        onMoveTaskEnd={moveTaskEndHandler}
+      />
     </div>
   );
 }

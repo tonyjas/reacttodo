@@ -2,18 +2,27 @@ import Column from './Column';
 import { DndContext } from '@dnd-kit/core';
 
 function ColumnPanel(props) {
+  function handleDragStart(event) {
+    console.log('Hello2!');
+    console.log(event);
+    console.log(event.active.id);
+    console.log(event.over?.id);
+
+    props.onMoveTaskStart(event.active.id);
+  }
+
   function handleDragEnd(event) {
     console.log('Hello!');
     console.log(event);
     console.log(event.active.id);
     console.log(event.over?.id);
 
-    props.onMoveTask(event.active.id, event.over?.id);
+    props.onMoveTaskEnd(event.active.id, event.over?.id);
   }
 
   return (
     <>
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className="column-panel">
           {props.columns.map((column) => {
             return (
